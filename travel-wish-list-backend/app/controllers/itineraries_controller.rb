@@ -8,6 +8,10 @@ class ItinerariesController < ApplicationController
 
     def create
         itinerary = Itinerary.new(itinerary_params)
+        # if itinerary.save
+        #     render json: itinerary, status: :accepted
+        # else
+        #     render json: {errors: itinerary.errors.full_messages}, status: :unprocessible_entity
     end
 
     def itinerary_params
