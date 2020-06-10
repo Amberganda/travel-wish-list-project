@@ -11,7 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
 function appendItinerary(itinerary) {
     const div = document.createElement("div")
     div.innerHTML = itinerary.name
-    document.body.appendChild(div);
+    div.classList.add("card", "grey")
+
+    document.body.appendChild(div)
+
+
 
 
 }
