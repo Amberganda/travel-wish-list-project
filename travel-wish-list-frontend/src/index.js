@@ -25,15 +25,23 @@ function appendItinerary(itinerary) {
     div.appendChild(button)
 
     const addIcon = document.createElement('i')
+    addIcon.setAttribute("data-itinerary-id", itinerary.id)
     addIcon.classList.add("material-icons")
     addIcon.innerText = "add"
     button.appendChild(addIcon)
     // a class = "btn-floating halfway-fab waves-effect waves-light red" > < i class = "material-icons" > add < /i></a >
 
+    // add event listener to button
+    button.addEventListener('click', addActivity)
+
+
     //build me up buttercup
     document.body.appendChild(div)
 
+}
 
-
-
+function addActivity(event) {
+    // console.log("added activity button")
+    const itineraryId = event.target.dataset.itineraryId
+    console.log(itineraryId)
 }
