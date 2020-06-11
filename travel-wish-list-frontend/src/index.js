@@ -1,4 +1,5 @@
 const BACKEND_URL = 'http://localhost:3000';
+
 // 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -62,4 +63,25 @@ function addActivity(itineraryId, activityValue) {
 
     // event.target.dataset.itineraryDiv.appendChild(activityText)
     // <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+
+    const activityData = {
+        name: activityValue
+    }
+
+    const configObj = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(activityData)
+    }
+
+    fetch(`${BACKEND_URL}/itineraries/${itineraryId}/activities`, configObj)
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function (activity) {
+            console.log(activity)
+        })
 }

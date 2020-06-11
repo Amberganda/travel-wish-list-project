@@ -14,6 +14,7 @@ class ItinerariesController < ApplicationController
         #     render json: {errors: itinerary.errors.full_messages}, status: :unprocessible_entity
     end
 
+    private
     def itinerary_params
         params.require(:itinerary).permit(:name)
     end
