@@ -25,8 +25,8 @@ function appendItinerary(itinerary) {
     div.appendChild(button)
 
     const addIcon = document.createElement('i')
-    addIcon.setAttribute("data-itinerary-id", itinerary.id)
-    addIcon.setAttribute("data-itinerary-div", div)
+    // addIcon.setAttribute("data-itinerary-id", itinerary.id)
+    // addIcon.setAttribute("data-itinerary-div", div)
     addIcon.classList.add("material-icons")
     addIcon.innerText = "add"
     button.appendChild(addIcon)
@@ -39,7 +39,14 @@ function appendItinerary(itinerary) {
         activityText.setAttribute("placeholder", "Placeholder")
         activityText.setAttribute("type", "text")
         div.appendChild(activityText)
-    })
+        //enter 
+        activityText.addEventListener('keypress', function (el) {
+            if (el.key === 'Enter') {
+                addActivity(itinerary.id, activityText.value)
+            }
+        })
+    });
+
 
 
     //build me up buttercup
@@ -47,11 +54,12 @@ function appendItinerary(itinerary) {
 
 }
 
-function addActivity(event) {
+function addActivity(itineraryId, activityValue) {
     // console.log("added activity button")
-    const itineraryId = event.target.dataset.itineraryId
-    console.log(event)
+    // const itineraryId = event.target.dataset.itineraryId
+    console.log(itineraryId)
+    console.log(activityValue)
 
-    event.target.dataset.itineraryDiv.appendChild(activityText)
+    // event.target.dataset.itineraryDiv.appendChild(activityText)
     // <input placeholder="Placeholder" id="first_name" type="text" class="validate">
 }
