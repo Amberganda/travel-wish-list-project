@@ -1,7 +1,5 @@
 const BACKEND_URL = 'http://localhost:3000';
 
-// 
-
 document.addEventListener("DOMContentLoaded", function () {
     fetch(`${BACKEND_URL}/itineraries`)
         .then(response => response.json())
@@ -44,6 +42,7 @@ function appendItinerary(itinerary) {
         activityText.addEventListener('keypress', function (el) {
             if (el.key === 'Enter') {
                 addActivity(itinerary.id, activityText.value)
+                div.removeChild(activityText)
             }
         })
     });
@@ -55,6 +54,7 @@ function appendItinerary(itinerary) {
     //ul
     const ul = document.createElement('ul')
     ul.classList.add('collection')
+    ul.id = `itinerary-${itinerary.id}`
     content.appendChild(ul)
 
 
@@ -102,6 +102,19 @@ function addActivity(itineraryId, activityValue) {
             return response.json()
         })
         .then(function (activity) {
-            console.log(activity)
+            addActivityToItinerary(activity)
         })
+}
+
+
+function addActivityToItinerary(activity) {
+    const ul = document.getElementById(`itinerary-${activity.itinerary_id}`)
+
+    const li = document.createElement('li')
+    li.classList.add('collection-item')
+    li.innerText = activity.name
+
+    //attach to ul
+    ul.appendChild(li)
+
 }
