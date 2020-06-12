@@ -48,6 +48,26 @@ function appendItinerary(itinerary) {
         })
     });
 
+    const content = document.createElement('div')
+    content.classList.add('card-content')
+    div.appendChild(content)
+
+    //ul
+    const ul = document.createElement('ul')
+    ul.classList.add('collection')
+    content.appendChild(ul)
+
+
+    itinerary.activities.forEach(function (activity) {
+        const li = document.createElement('li')
+        li.classList.add('collection-item')
+        li.innerText = activity.name
+
+        //attach to ul
+        ul.appendChild(li)
+
+    })
+
 
 
     //build me up buttercup

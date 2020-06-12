@@ -7,6 +7,9 @@ class ActivitiesController < ApplicationController
         render json: activity
     end
 
+   
+
+
     private 
     def activity_params
         params.require(:activity).permit(:name)
