@@ -4,9 +4,70 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(`${BACKEND_URL}/itineraries`)
         .then(response => response.json())
         .then(function (itineraries) {
+            itineraries.forEach(function (itinerary) {
+                const i = new Itinerary(itinerary)
+                i.append()
+            })
             itineraries.forEach(appendItinerary);
         })
+
 })
+
+class Itinerary {
+    constructor({
+        id,
+        name,
+        activities
+    }) {
+        this.id = id;
+        this.name = name;
+        this.activities = activities;
+    }
+    //method
+    append() {
+        //create div w/ itinerary names
+        const div = document.createElement('div')
+        div.classList.add("card", "pink", "accent-2")
+        // make p tag
+        const title = document.createElement('p')
+        title.innerText = this.name
+        div.appendChild(title)
+        //make add button
+        const button = document.createElement('a')
+        button.classList.add("btn-floating", "halfway-fab", "waves-effect", "waves-light", "red")
+        div.appendChild(button)
+
+        //i tag
+        const addIcon = document.createElement('i')
+        addIcon.classList.add('material-icons')
+        addIcon.innerText = "add"
+        button.appendChild(addIcon)
+
+        //add event listener to add button
+        button.addEventListener('click', this.activityButtonClicked)
+
+        //content
+        const content = document.createElement('div')
+        content.classList.add('card-content')
+        div.appendChild(content)
+
+        //ul
+        const ul = document.createElement('ul')
+        ul.classList.add('collection')
+        ul.id = `itinerary-${this.id}`
+        content.appendChild(ul)
+
+        this.activities.forEach(function (activity) {
+            console.log(activity)
+        })
+
+        document.body.appendChild(div)
+    }
+
+    activityButtonClicked(event) {
+        console.log("clicked")
+    }
+}
 
 function appendItinerary(itinerary) {
     //create div w/ Itinerary Names
