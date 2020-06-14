@@ -1,9 +1,10 @@
 class ItinerariesController < ApplicationController
+    
 
 
     def index
-        itineraries = Itinerary.all
-        render json: itineraries, include: [:activities]
+        @itineraries = Itinerary.all
+        render json: @itineraries, status: 200
     end
 
 

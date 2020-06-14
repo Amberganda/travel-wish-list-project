@@ -131,6 +131,7 @@ function addActivity(itineraryId, activityValue) {
 
 
 function addActivityToItinerary(activity) {
+    console.log(activity)
     const ul = document.getElementById(`itinerary-${activity.itinerary_id}`)
 
     const li = document.createElement('li')
