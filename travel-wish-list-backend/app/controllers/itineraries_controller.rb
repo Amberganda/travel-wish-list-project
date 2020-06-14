@@ -6,20 +6,6 @@ class ItinerariesController < ApplicationController
         render json: itineraries, include: [:activities]
     end
 
-    def create
-        itinerary = Itinerary.new(itinerary_params)
-        # if itinerary.save
-        #     render json: itinerary, status: :accepted
-        # else
-        #     render json: {errors: itinerary.errors.full_messages}, status: :unprocessible_entity
-    end
-
-    def destroy
-        itinerary = Itinerary.find(params[:itinerary_id])
-        itinerary.destroy
-        render json: itinerary
-    end
-
 
     private
     def itinerary_params
