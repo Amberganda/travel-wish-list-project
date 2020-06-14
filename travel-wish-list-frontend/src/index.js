@@ -22,20 +22,20 @@ class Itinerary {
         this.id = id;
         this.name = name;
         this.activities = activities;
+        this.div = document.createElement('div')
     }
     //method
     append() {
         //create div w/ itinerary names
-        const div = document.createElement('div')
-        div.classList.add("card", "pink", "accent-2")
+        this.div.classList.add("card", "pink", "accent-2")
         // make p tag
         const title = document.createElement('p')
         title.innerText = this.name
-        div.appendChild(title)
+        this.div.appendChild(title)
         //make add button
         const button = document.createElement('a')
         button.classList.add("btn-floating", "halfway-fab", "waves-effect", "waves-light", "red")
-        div.appendChild(button)
+        this.div.appendChild(button)
 
         //i tag
         const addIcon = document.createElement('i')
@@ -44,12 +44,12 @@ class Itinerary {
         button.appendChild(addIcon)
 
         //add event listener to add button
-        button.addEventListener('click', this.activityButtonClicked)
+        button.addEventListener('click', this.activityButtonClicked.bind(this))
 
         //content
         const content = document.createElement('div')
         content.classList.add('card-content')
-        div.appendChild(content)
+        this.div.appendChild(content)
 
         //ul
         const ul = document.createElement('ul')
@@ -62,11 +62,29 @@ class Itinerary {
             act.append(ul)
         })
 
-        document.body.appendChild(div)
+        document.body.appendChild(this.div)
     }
 
     activityButtonClicked(event) {
         console.log("clicked")
+        const activityText = document.createElement('input')
+        activityText.classList.add('validate')
+        activityText.setAttribute('placeholder', 'Activity')
+        activityText.setAttribute('type', 'text')
+        this.div.appendChild(activityText)
+        //enter
+        activityText.addEventListener('keypress', this.activityTextKeyPressed.bind(this))
+
+    }
+
+
+    activityTextKeyPressed(event) {
+        if (event.key === 'Enter') {
+            console.log(event)
+            addActivity(this.id, event.target.value)
+            this.div.removeChild(event.target)
+        }
+
     }
 }
 
