@@ -14,6 +14,13 @@ class ItinerariesController < ApplicationController
         #     render json: {errors: itinerary.errors.full_messages}, status: :unprocessible_entity
     end
 
+    def destroy
+        itinerary = Itinerary.find(params[:itinerary_id])
+        itinerary.destroy
+        render json: itinerary
+    end
+
+
     private
     def itinerary_params
         params.require(:itinerary).permit(:name)

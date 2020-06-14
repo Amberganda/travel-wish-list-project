@@ -18,7 +18,7 @@ function appendItinerary(itinerary) {
     title.innerText = itinerary.name
     div.appendChild(title)
 
-    //make button
+    //make add button
     const button = document.createElement("a")
     button.classList.add("btn-floating", "halfway-fab", "waves-effect", "waves-light", "red")
     div.appendChild(button)
@@ -31,7 +31,7 @@ function appendItinerary(itinerary) {
     button.appendChild(addIcon)
     // a class = "btn-floating halfway-fab waves-effect waves-light red" > < i class = "material-icons" > add < /i></a >
 
-    // add event listener to button
+    // add event listener to add button
     button.addEventListener('click', function (event) {
         const activityText = document.createElement('input')
         activityText.classList.add("validate")
@@ -59,12 +59,35 @@ function appendItinerary(itinerary) {
 
 
     itinerary.activities.forEach(function (activity) {
+        // <li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
         const li = document.createElement('li')
         li.classList.add('collection-item')
-        li.innerText = activity.name
 
         //attach to ul
         ul.appendChild(li)
+
+        //div
+        const activityDiv = document.createElement('div')
+        activityDiv.innerText = activity.name
+        li.appendChild(activityDiv)
+
+        //a href
+        const a = document.createElement('a')
+        a.setAttribute('href', '#!')
+        a.classList.add('secondary-content')
+        activityDiv.appendChild(a)
+
+
+        a.addEventListener('click', function (event) {
+            removeActivityFromItinerary(activity)
+            ul.removeChild(li)
+        })
+
+        //i for remove button
+        const icon = document.createElement('i')
+        icon.classList.add('material-icons')
+        icon.innerText = 'clear'
+        a.appendChild(icon)
 
     })
 
@@ -117,4 +140,23 @@ function addActivityToItinerary(activity) {
     //attach to ul
     ul.appendChild(li)
 
+}
+
+function removeActivityFromItinerary(activity) {
+    // const activityItem = document.querySelector()
+    const activityItem = document.getElementById(`itinerary-${activity.itinerary_id}`)
+
+
+
+    const configObj = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+    };
+    fetch(`${BACKEND_URL}/itineraries/${activity.itinerary_id}/activities/${activity.id}`, configObj)
+        .then(function (response) {
+            console.log("Success")
+        })
 }
