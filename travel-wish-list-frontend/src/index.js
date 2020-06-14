@@ -58,7 +58,8 @@ class Itinerary {
         content.appendChild(ul)
 
         this.activities.forEach(function (activity) {
-            console.log(activity)
+            const act = new Activity(activity)
+            act.append(ul)
         })
 
         document.body.appendChild(div)
@@ -67,6 +68,51 @@ class Itinerary {
     activityButtonClicked(event) {
         console.log("clicked")
     }
+}
+
+class Activity {
+    constructor({
+        id,
+        name,
+        itinerary_id
+    }) {
+        this.id = id;
+        this.name = name;
+        this.itinerary_id = itinerary_id;
+    }
+    //method appending rows
+    append(parent) {
+        const li = document.createElement('li')
+        li.classList.add('collection-item')
+        parent.appendChild(li)
+
+        //div
+        const div = document.createElement('div')
+        div.innerText = this.name
+        li.appendChild(div)
+
+        //a href
+        const a = document.createElement('a')
+        a.setAttribute('href', '#!')
+        a.classList.add('secondary-content')
+        div.appendChild(a)
+
+        a.addEventListener('click', this.deleteButtonClicked)
+
+        //i for remove button
+        const icon = document.createElement('i')
+        icon.classList.add('material-icons')
+        icon.innerText = 'clear'
+        a.appendChild(icon)
+
+
+
+    }
+    deleteButtonClicked(event) {
+        console.log("clicked delete")
+    }
+
+
 }
 
 function appendItinerary(itinerary) {
