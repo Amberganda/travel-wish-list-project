@@ -127,10 +127,12 @@ class Activity {
         this.itinerary_id = itinerary_id;
     }
     //method appending rows
-    append(parent) {
+    append = (parent) => {
         const li = document.createElement('li')
         li.classList.add('collection-item')
         parent.appendChild(li)
+        this.parent = parent
+        this.child = li
 
         //div
         const div = document.createElement('div')
@@ -154,11 +156,26 @@ class Activity {
 
 
     }
-    deleteButtonClicked(event) {
+    deleteButtonClicked = (event) => {
         console.log("clicked delete")
+        this.removeFromItinerary()
+        this.parent.removeChild(this.child)
     }
 
+    removeFromItinerary = () => {
+        const configObj = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+        };
+        fetch(`${BACKEND_URL}/itineraries/${this.itinerary_id}/activities/${this.id}`, configObj)
+            .then(function (response) {
+                console.log("Success")
+            })
 
+    }
 }
 
 function appendItinerary(itinerary) {
