@@ -10,13 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_09_033858) do
+ActiveRecord::Schema.define(version: 2020_06_15_025145) do
 
   create_table "activities", force: :cascade do |t|
     t.integer "itinerary_id"
     t.string "name"
-    t.string "description"
-    t.integer "duration_hours"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["itinerary_id"], name: "index_activities_on_itinerary_id"
