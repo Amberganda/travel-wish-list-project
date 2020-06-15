@@ -23,9 +23,10 @@ class Itinerary {
         this.name = name;
         this.activities = activities;
         this.div = document.createElement('div')
+        this.ul = document.createElement('ul')
     }
     //method
-    append() {
+    append = () => {
         //create div w/ itinerary names
         this.div.classList.add("card", "pink", "accent-2")
         // make p tag
@@ -44,7 +45,7 @@ class Itinerary {
         button.appendChild(addIcon)
 
         //add event listener to add button
-        button.addEventListener('click', this.activityButtonClicked.bind(this))
+        button.addEventListener('click', this.activityButtonClicked)
 
         //content
         const content = document.createElement('div')
@@ -52,20 +53,21 @@ class Itinerary {
         this.div.appendChild(content)
 
         //ul
-        const ul = document.createElement('ul')
-        ul.classList.add('collection')
-        ul.id = `itinerary-${this.id}`
-        content.appendChild(ul)
+        this.ul.classList.add('collection')
+        this.ul.id = `itinerary-${this.id}`
+        content.appendChild(this.ul)
 
-        this.activities.forEach(function (activity) {
-            const act = new Activity(activity)
-            act.append(ul)
-        })
+        this.activities.forEach(this.appendActivity);
 
         document.body.appendChild(this.div)
     }
+    //handoff 
+    appendActivity = (activity) => {
+        const act = new Activity(activity)
+        act.append(this.ul)
+    }
 
-    activityButtonClicked(event) {
+    activityButtonClicked = (event) => {
         console.log("clicked")
         const activityText = document.createElement('input')
         activityText.classList.add('validate')
@@ -73,17 +75,43 @@ class Itinerary {
         activityText.setAttribute('type', 'text')
         this.div.appendChild(activityText)
         //enter
-        activityText.addEventListener('keypress', this.activityTextKeyPressed.bind(this))
+        activityText.addEventListener('keypress', this.activityTextKeyPressed)
 
     }
 
-
-    activityTextKeyPressed(event) {
+    activityTextKeyPressed = (event) => {
         if (event.key === 'Enter') {
-            console.log(event)
-            addActivity(this.id, event.target.value)
+            console.log(this)
+            this.addActivity(event.target.value)
+
             this.div.removeChild(event.target)
         }
+
+    }
+
+    addActivity = (name) => {
+        const activityData = {
+            name: name
+        }
+
+        const configObj = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(activityData)
+        }
+
+        fetch(`${BACKEND_URL}/itineraries/${this.id}/activities`, configObj)
+            .then(function (response) {
+                return response.json()
+            })
+            .then(function (activity) {
+                const act = new Activity(activity)
+                act.append(this.ul)
+            }.bind(this))
+
 
     }
 }
