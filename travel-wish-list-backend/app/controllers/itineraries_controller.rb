@@ -3,8 +3,8 @@ class ItinerariesController < ApplicationController
 
 
     def index
-        @itineraries = Itinerary.all
-        render json: @itineraries, status: 200
+        itineraries = Itinerary.all
+        render json: itineraries, status: 200
     end
 
 

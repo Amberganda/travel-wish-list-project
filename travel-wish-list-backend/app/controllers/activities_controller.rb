@@ -1,11 +1,11 @@
 class ActivitiesController < ApplicationController
 
     def create
-        @itinerary = Itinerary.find(params[:itinerary_id])
-        @activity = @itinerary.activities.create(activity_params)
+        itinerary = Itinerary.find(params[:itinerary_id])
+        activity = itinerary.activities.create(activity_params)
         # activity = Activity.create(activity_params)
         # pp @activity.itinerary
-        render json: @activity, include: @itinerary, status: 200
+        render json: activity, include: itinerary, status: 200
     end
 
     def destroy
