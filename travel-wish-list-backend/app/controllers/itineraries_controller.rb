@@ -1,17 +1,8 @@
 class ItinerariesController < ApplicationController
-    
 
-
-    def index
+    def index #method
         itineraries = Itinerary.all
-        render json: itineraries, status: 200
+        render json: itineraries
     end
-
-
-    private
-    def itinerary_params
-        params.require(:itinerary).permit(:name)
-    end
-
 
 end
